@@ -1,1 +1,4 @@
 rootProject.name = 'taps-be'
+include 'taps-aggregator-api'
+include 'taps-core-api'
+//include 'taps-external-pai'

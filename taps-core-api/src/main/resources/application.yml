@@ -1,0 +1,19 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: 'false'
+    suffix: .html
+    check-template-location: 'true'
+  mvc:
+    path-match:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/auth;MODE=MySQL
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+---
+server:
+  port: '8082'
+

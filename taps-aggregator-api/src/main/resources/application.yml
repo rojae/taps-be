@@ -1,0 +1,28 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: 'false'
+    suffix: .html
+    check-template-location: 'true'
+  mvc:
+    path-match:
+      matching-strategy: ant_path_matcher
+
+---
+server:
+  port: '8080'
+
+
+---
+tistory:
+  apis:
+    authorize:
+      uri: 'https://www.tistory.com/oauth/authorize'
+      state: 'tapsv1'
+    accessToken:
+      uri: 'https://www.tistory.com/oauth/access_token'
+
+taps:
+  aggregator-api:
+    uri: http://localhost:8080
+    authorize: /authorize/token
