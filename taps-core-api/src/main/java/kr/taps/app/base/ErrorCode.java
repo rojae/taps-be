@@ -12,6 +12,7 @@ public enum ErrorCode {
   INVALID_PARAMETER("1402", "입력값이 올바르지 않습니다."),
   DATA_NOT_FOUND("1414", "데이터가 존재하지 않습니다."),
   REQUEST_NOT_FOUND("1415", "인증 요청 데이터가 존재하지 않습니다."),
+  ALREADY_SAME_DATA("1416", "요청 데이터가 기존 데이터와 동일한 데이터입니다"),
 
   // SYSTEM ERROR
   UNDESCRIBED("9999", "일시적인 시스템 지연이 발생했습니다. 잠시 후 다시 시도해주세요.", HttpStatus.INTERNAL_SERVER_ERROR);

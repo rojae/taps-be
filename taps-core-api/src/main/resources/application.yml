@@ -8,12 +8,25 @@ spring:
     path-match:
       matching-strategy: ant_path_matcher
   datasource:
-    url: jdbc:h2:tcp://localhost/~/auth;MODE=MySQL
+    url: jdbc:h2:tcp://localhost/~/TAPS;INIT=CREATE SCHEMA IF NOT EXISTS TAPS
     driverClassName: org.h2.Driver
     username: sa
     password:
-
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+    open-in-view: false
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 2000
 ---
 server:
-  port: '8082'
+  port: '8084'
 

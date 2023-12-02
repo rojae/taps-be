@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientInfoRequest {
+  private String email;
+  private String serviceType;
   private String clientId;
   private String clientSecret;
-
-  // USER PK
-  private String email;
 }
