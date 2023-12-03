@@ -13,6 +13,15 @@ public enum ErrorCode {
   DATA_NOT_FOUND("1414", "데이터가 존재하지 않습니다."),
   REQUEST_NOT_FOUND("1415", "인증 요청 데이터가 존재하지 않습니다."),
 
+  // 3xxx JJWT, AUTH Error
+  TOKEN_AUTHENTICATION_FAILED("3002", "토큰 인증에 실패했습니다", HttpStatus.OK),
+  TOKEN_ALREADY_USED("3003", "이미 인증에 사용된 토큰입니다", HttpStatus.OK),
+
+  // AES
+  CIPHER_ENCRYPT_ERROR("3100", "암호화에 실패했습니다", HttpStatus.OK),
+  CIPHER_DECRYPT_ERROR("3101", "복호화에 실패했습니다", HttpStatus.OK),
+
+
   // SYSTEM ERROR
   UNDESCRIBED("9999", "일시적인 시스템 지연이 발생했습니다. 잠시 후 다시 시도해주세요.", HttpStatus.INTERNAL_SERVER_ERROR);
 

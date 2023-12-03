@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientInfoResponse {
+public class SignupRequest {
   private String email;
+  private String serviceType;
+  private String clientId;
+  private String clientSecret;
 }

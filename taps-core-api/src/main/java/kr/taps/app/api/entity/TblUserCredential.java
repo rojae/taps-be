@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,10 +20,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
@@ -30,6 +33,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 @EqualsAndHashCode // 필수
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "TBL_USER_CREDENTIAL", schema = "TAPS")
+@DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 public class TblUserCredential {
 
   // 테이블 시퀀스 아이디
@@ -81,22 +86,16 @@ public class TblUserCredential {
     this.serviceType = serviceType;
     this.clientId = clientId;
     this.clientSecret = clientSecret;
-    this.insDate = LocalDateTime.now();
     this.insOprt = "taps-be";
-    this.updDate = LocalDateTime.now();
     this.updOprt = "taps-be";
   }
 
-  public void setUserInfo(TblUserInfo userInfo){
-    this.userInfo = userInfo;
-  }
-
-  public void setClientInfo(String clientId, String clientSecret){
+  public void updateCredential(String clientId, String clientSecret){
     this.clientId = clientId;
     this.clientSecret = clientSecret;
   }
 
-  public boolean sameClientInfo(String clientId, String clientSecret){
+  public boolean isSameClientInfo(String clientId, String clientSecret){
     return this.clientId.equals(clientId) && this.clientSecret.equals(clientSecret);
   }
 

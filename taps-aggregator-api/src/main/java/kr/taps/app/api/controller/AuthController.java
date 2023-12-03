@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 import kr.taps.app.api.dto.AuthRequest;
 import kr.taps.app.api.dto.AuthUrlRequest;
 import kr.taps.app.api.dto.AuthUrlResponse;
 import kr.taps.app.api.dto.ClientInfoRequest;
 import kr.taps.app.api.dto.ClientInfoResponse;
+import kr.taps.app.api.jwt.JwtTokenValidation;
 import kr.taps.app.api.props.TistoryProps;
 import kr.taps.app.api.service.AuthService;
 import kr.taps.app.base.TapsApiResponse;
@@ -20,9 +22,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
-@RestController("/gate")
+@RestController
+@RequestMapping("/api/v1/authorize")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
@@ -33,15 +39,15 @@ public class AuthController {
   /**
    * 01. 서비스 이용을 위한 사이트들의 클라이이언트 아이디, 클라이언트 시크릿을 저장 (토큰 필요)
    */
-  @PostMapping(value = "/authorize/client-info")
-  public TapsApiResponse<ClientInfoResponse> clientInfo(@RequestBody ClientInfoRequest request){
+  @PostMapping(value = "/client-info")
+  public Mono<TapsApiResponse<ClientInfoResponse>> clientInfo(@RequestBody ClientInfoRequest request){
     return authService.clientInfo(request.getClientId(), request.getClientSecret());
   }
 
   /**
    * 02. 서비스 허용을 하기 위한 API (실제 외부 서비스들의 코드 발급을 위함)
    */
-  @PostMapping(value = "/authorize/{serviceType}")
+  @PostMapping(value = "/{serviceType}")
   public TapsApiResponse<AuthUrlResponse> authUrl(@PathVariable String serviceType, @ModelAttribute AuthUrlRequest request) {
     return authService.authUrl(serviceType, request.getClientId());
   }
@@ -51,7 +57,7 @@ public class AuthController {
    * SetviceType에 따른 code가 넘어왔기 때문에, AccessToken을 발급처리 하고 디비 저장
    */
   // Authorize Code가 넘어왔으므로, AccessToken을 발급받자
-  @GetMapping(value = "/authorize/token")
+  @GetMapping(value = "/token")
   public String authorize(@ModelAttribute AuthRequest request){
     if(!request.getState().equals(tistoryProps.stateCode)){
       return "error";

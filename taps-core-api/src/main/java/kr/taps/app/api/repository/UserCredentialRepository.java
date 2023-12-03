@@ -1,5 +1,6 @@
 package kr.taps.app.api.repository;
 
+import java.util.List;
 import java.util.Optional;
 import kr.taps.app.api.common.enums.ServiceType;
 import kr.taps.app.api.entity.TblUserCredential;
@@ -9,5 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserCredentialRepository extends JpaRepository<TblUserCredential, Long> {
 
   Optional<TblUserCredential> findByUserInfoAndServiceType(TblUserInfo userInfo, ServiceType serviceType);
+  List<TblUserCredential> findByUserInfo(TblUserInfo userInfo);
 
 }
